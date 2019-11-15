@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include"PrintToFile.h"
+#include"MatrixOperation.h"
 
 int main(int argc,char *argv[])
 {	
@@ -83,13 +84,10 @@ int main(int argc,char *argv[])
 	InitializeArray(CoordX,i,0.0);
 	InitializeArray(CoordY,i,1.0);
 	InitializeArray(CoordZ,i,2.0);
-  /*  PrintArray(CoordX,Directory1,"x",i);
-	PrintArray(CoordY,Directory1,"x",i);
-	PrintArray(CoordZ,Directory1,"x",i);*/
-	
+
 	//************动态数组（二维）***********//
 	double **Matrix2;
-	int m = 5,n = 10;
+	int m = 20,n = 20,k,Bandwidth=5;
 
 	Matrix2 = (double**)malloc(m*sizeof(double*));
 	for(i=0;i<m;i++)
@@ -97,7 +95,8 @@ int main(int argc,char *argv[])
 		*(Matrix2+i) = (double*)malloc(n*sizeof(double));
 	}
 	InitializeMatrix(Matrix2,m,n,0.0);
-    PrintMatrix(Matrix2,Directory2,"AAA",m,n);
+	MatrixDefination(Matrix2,m,Bandwidth);
+	PrintMatrix(Matrix2,Directory2,"AAA",m,n);
 	system("pause");
 
 	//////************从文件读取***********//
