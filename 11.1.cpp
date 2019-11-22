@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include"PrintToFile.h"
 #include"MatrixOperation.h"
+#include"MatrixMultiplication.h"
 
 int main(int argc,char *argv[])
 {	
@@ -74,16 +75,16 @@ int main(int argc,char *argv[])
 	Directory2="C:\\Users\\Crystal\\Desktop\\Matrix.txt";
 
 	//************动态数组（一维）***********//
-	printf("Please set array size\n");
-	scanf("%d",&i);
-	double *CoordX,*CoordY,*CoordZ;
-	CoordX = (double*)malloc(i*sizeof(double));
-	CoordY = (double*)malloc(i*sizeof(double));
-	CoordZ = (double*)malloc(i*sizeof(double));
-	//初始化//
-	InitializeArray(CoordX,i,0.0);
-	InitializeArray(CoordY,i,1.0);
-	InitializeArray(CoordZ,i,2.0);
+	//printf("Please set array size\n");
+	//scanf("%d",&i);
+	//double *CoordX,*CoordY,*CoordZ;
+	//CoordX = (double*)malloc(i*sizeof(double));
+	//CoordY = (double*)malloc(i*sizeof(double));
+	//CoordZ = (double*)malloc(i*sizeof(double));
+	////初始化//
+	//InitializeArray(CoordX,i,0.0);
+	//InitializeArray(CoordY,i,1.0);
+	//InitializeArray(CoordZ,i,2.0);
 
 	//************动态数组（二维）***********//
 	double **Matrix2;
@@ -94,9 +95,17 @@ int main(int argc,char *argv[])
 	{
 		*(Matrix2+i) = (double*)malloc(n*sizeof(double));
 	}
+	double *x,*b;
+	x=(double*)malloc(n*sizeof(double));
+	b=(double*)malloc(m*sizeof(double));
+	InitializeArray(x,n,1.0);
+	InitializeArray(b,m,0.0);
 	InitializeMatrix(Matrix2,m,n,0.0);
 	MatrixDefination(Matrix2,m,Bandwidth);
 	PrintMatrix(Matrix2,Directory2,"AAA",m,n);
+	MatrixMutiplication(Matrix2,m,n,x,b);
+	PrintArray(x,Directory1,"x",n);
+	PrintArray(b,Directory1,"b",m);
 	system("pause");
 
 	//////************从文件读取***********//

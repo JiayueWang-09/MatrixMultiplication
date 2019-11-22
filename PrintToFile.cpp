@@ -53,3 +53,23 @@ void PrintMatrix(double **Matrix,char *Directory,char *MatrixName,int m,int n)
 	}
 	fclose(fp);
 }
+
+
+void PrintArray(double *Array,char *Directory,char *ArrayName,int m)
+{
+	FILE *fp;
+	errno_t err;
+	err=fopen_s(&fp,Directory, "a+");//append¸½¼Ó
+
+	fprintf(fp,"Array's name is:%s,Number of rows =%d\n",ArrayName,m);
+	printf("Array's name is:%s,Number of rows =%d\n",ArrayName,m);
+	int i;
+	for(i=0;i<m;i++)
+	{
+	    fprintf(fp,"%16.11lf ",Array[i]);
+		printf("%16.11lf ",Array[i]);		
+		fprintf(fp,"\n");
+		printf("\n");	
+	}
+	fclose(fp);
+}
