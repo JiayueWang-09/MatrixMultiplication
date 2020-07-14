@@ -6,7 +6,7 @@
 #include"PrintToFile.h"
 #include"MatrixOperation.h"
 #include"MatrixMultiplication.h"
-
+#include<math.h>
 int main(int argc,char *argv[])
 {	
 
@@ -68,7 +68,7 @@ int main(int argc,char *argv[])
 
 	//************动态数组（一维）***********//
 	////声明//
-	double pi = 3.14159265358;
+	//double pi = 3.14159265358;
 	int i,j;
 	char *Directory1,*Directory2;
 	Directory1="C:\\Users\\Crystal\\Desktop\\Array.txt";
@@ -87,26 +87,68 @@ int main(int argc,char *argv[])
 	//InitializeArray(CoordZ,i,2.0);
 
 	//************动态数组（二维）***********//
+	double *b;
+	double error0=1.0e-6;
 	double **Matrix2;
-	int m = 20,n = 20,k,Bandwidth=5;
-
-	Matrix2 = (double**)malloc(m*sizeof(double*));
-	for(i=0;i<m;i++)
+	int n = 2000,Bandwidth=5;
+	
+	Matrix2 = (double**)malloc(n*sizeof(double*));
+	for(i=0;i<n;i++)
 	{
-		*(Matrix2+i) = (double*)malloc(n*sizeof(double));
+		*(Matrix2+i) = (double*)malloc((2*Bandwidth-1)*sizeof(double));
 	}
-	double *x,*b;
-	x=(double*)malloc(n*sizeof(double));
-	b=(double*)malloc(m*sizeof(double));
-	InitializeArray(x,n,1.0);
-	InitializeArray(b,m,0.0);
-	InitializeMatrix(Matrix2,m,n,0.0);
-	MatrixDefination(Matrix2,m,Bandwidth);
-	PrintMatrix(Matrix2,Directory2,"AAA",m,n);
-	MatrixMutiplication(Matrix2,m,n,x,b);
+	
+	b=(double*)malloc(n*sizeof(double));
+	
+
+	
+	InitializeArray(b,n,1.0);
+	InitializeMatrix(Matrix2,n,2*Bandwidth-1,0.0);
+	//MatrixDefination(Matrix2,n,Bandwidth);
+	MatrixDefination_Banded(Matrix2,n,Bandwidth);
+
+	
+	ConjugateGradient(Matrix2,n,b,error0);
+
+	//	Conjugate Gradient//
+	//InitializeArray(x,n,0.0);
+	//MatrixMutiplication(Matrix2,n,n,x,Arraytemp);
+	//for(i=0;i<n;i++)
+	//{
+	//	r[i]=b[i]-Arraytemp[i];//r0
+	//	p[i]=r[i];//p0
+	//}
+	//k=0;
+	//error=sqrt(Dotproduct(r,r,n));
+
+	//while(error > error0)
+	//{
+	//	MatrixMutiplication(Matrix2,n,n,p,Arraytemp);
+	//	alpha=Dotproduct(r,r,n)/Dotproduct(p,Arraytemp,n);
+	//	for(i=0;i<n;i++)
+	//	{
+	//		x[i]+=x[i]+alpha*p[i];
+	//		r_new[i]=r[i]-alpha*Arraytemp[i];
+	//	}
+	//	error=sqrt(Dotproduct(r_new,r_new,n));
+	//	beta=Dotproduct(r_new,r_new,n)/Dotproduct(r,r,n);
+	//	for(i=0;i<n;i++)
+	//	{
+	//		p[i]=r_new[i]+beta*p[i];
+	//		r[i]=r_new[i];
+	//	}
+	//	k++;
+	//}
+
+	
+	/*PrintMatrix(Matrix2,Directory2,"AAA",n,n);
+	MatrixMutiplication(Matrix2,n,n,x,b);
 	PrintArray(x,Directory1,"x",n);
-	PrintArray(b,Directory1,"b",m);
-	system("pause");
+	PrintArray(b,Directory1,"b",n);
+	system("pause");*/
+
+	
+
 
 	//////************从文件读取***********//
 	//FILE *fp;
